@@ -12,7 +12,7 @@ def health_check():
     return jsonify({'status': 'ok'})
 
 @app.route('/', methods=['GET'])
-def health_check():
+def home():
     return jsonify({'hello': 'ok'})
 
 if __name__ == '__main__':
