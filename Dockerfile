@@ -30,4 +30,4 @@ USER appuser
 EXPOSE ${PORT}
 
 # Command to run the application
-CMD gunicorn --bind 0.0.0.0:${PORT} --workers=2 --worker-class=gevent --timeout=30 --access-logfile - --error-logfile - app:app
+CMD gunicorn --bind 0.0.0.0:${PORT} --workers=1 --worker-class=gevent --timeout=30 --access-logfile - --error-logfile - app:app
