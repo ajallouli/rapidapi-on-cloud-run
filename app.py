@@ -1,20 +1,32 @@
 import os
-from flask import Flask, jsonify
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+# Load environment variables from .env file
+load_dotenv()
 
-@app.route('/developper', methods=['GET'])
+app = FastAPI(
+    title="Dev API",
+    description="A simple API for development",
+    version="1.0.0"
+)
+
+@app.get('/developper')
 def get_developer():
-    return jsonify({'dev': 'amine'})
+    return {"dev": "amine"}
 
-@app.route('/health', methods=['GET'])
+@app.get('/health')
 def health_check():
-    return jsonify({'status': 'ok'})
+    return {"status": "ok"}
 
-@app.route('/', methods=['GET'])
+@app.get('/')
 def home():
-    return jsonify({'hello': 'ok'})
+    return {"hello": "ok"}
 
+# This is only used when running the app directly with Python
+# When using uvicorn or gunicorn, this block is not executed
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))
-    app.run(host='0.0.0.0', port=port)
+    import uvicorn
+    port = int(os.environ.get('PORT', 8000))  # PORT is now loaded from .env if available
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)

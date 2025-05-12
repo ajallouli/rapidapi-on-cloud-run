@@ -29,5 +29,5 @@ USER appuser
 # Expose the port the app runs on
 EXPOSE ${PORT}
 
-# Command to run the application
-CMD gunicorn --bind 0.0.0.0:${PORT} --workers=2 --worker-class=gevent --timeout=30 --access-logfile - --error-logfile - app:app
+# Command to run the application using Uvicorn with Gunicorn
+CMD gunicorn --bind 0.0.0.0:${PORT} --workers=2 --worker-class=uvicorn.workers.UvicornWorker --timeout=30 --access-logfile - --error-logfile - app:app

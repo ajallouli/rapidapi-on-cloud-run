@@ -1,12 +1,13 @@
 # Developer API
 
-A production-ready Python REST API using Flask and Gunicorn.
+A production-ready Python REST API using FastAPI and Uvicorn/Gunicorn.
 
 ## Features
 
-- Flask web framework
-- Gunicorn WSGI server with gevent workers
-- Single endpoint `/developper` that returns `{'dev': 'amine'}`
+- FastAPI web framework
+- Uvicorn ASGI server with Gunicorn workers
+- Automatic OpenAPI documentation
+- Single endpoint `/developper` that returns `{"dev": "amine"}`
 - Containerized with Docker
 - Ready for deployment to Google Cloud Run
 
@@ -24,9 +25,14 @@ A production-ready Python REST API using Flask and Gunicorn.
    python app.py
    ```
 
-3. Or run with Gunicorn:
+3. Or run with Uvicorn:
    ```
-   gunicorn --bind 0.0.0.0:8000 --workers=2 --worker-class=gevent app:app
+   uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+4. Or run with Gunicorn:
+   ```
+   gunicorn --bind 0.0.0.0:8000 --workers=2 --worker-class=uvicorn.workers.UvicornWorker app:app
    ```
 
 ### Using Docker Compose
@@ -37,6 +43,7 @@ A production-ready Python REST API using Flask and Gunicorn.
    ```
 
 2. Access the API at http://localhost:8000/developper
+3. Access API documentation at http://localhost:8000/docs or http://localhost:8000/redoc
 
 ## Deployment to Google Cloud Run
 
@@ -56,6 +63,8 @@ gcloud run deploy dev-api \
 
 ## API Endpoints
 
-- `/developper` - Returns `{'dev': 'amine'}`
-- `/health` - Health check endpoint, returns `{'status': 'ok'}`
+- `/developper` - Returns `{"dev": "amine"}`
+- `/health` - Health check endpoint, returns `{"status": "ok"}`
+- `/docs` - Interactive API documentation (Swagger UI)
+- `/redoc` - Alternative API documentation (ReDoc)
 
