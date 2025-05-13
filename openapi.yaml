@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Dev API
+  description: A simple API for development
+  version: 1.0.0
+paths:
+  /developer:
+    get:
+      summary: Get Developer
+      operationId: get_developer_developer_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperResponse'
+  /health:
+    get:
+      summary: Health Check
+      operationId: health_check_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /:
+    get:
+      summary: Home
+      operationId: home__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeResponse'
+components:
+  schemas:
+    DeveloperResponse:
+      properties:
+        dev:
+          type: string
+          title: Dev
+      type: object
+      required:
+      - dev
+      title: DeveloperResponse
+    HealthResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - status
+      title: HealthResponse
+    HomeResponse:
+      properties:
+        hello:
+          type: string
+          title: Hello
+      type: object
+      required:
+      - hello
+      title: HomeResponse

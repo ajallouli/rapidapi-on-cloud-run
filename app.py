@@ -2,9 +2,20 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
+from pydantic import BaseModel
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Define response models
+class DeveloperResponse(BaseModel):
+    dev: str
+
+class HealthResponse(BaseModel):
+    status: str
+
+class HomeResponse(BaseModel):
+    hello: str
 
 app = FastAPI(
     title="Dev API",
@@ -12,15 +23,15 @@ app = FastAPI(
     version="1.0.0"
 )
 
-@app.get('/developper')
+@app.get('/developer', response_model=DeveloperResponse)
 def get_developer():
     return {"dev": "amine"}
 
-@app.get('/health')
+@app.get('/health', response_model=HealthResponse)
 def health_check():
     return {"status": "ok"}
 
-@app.get('/')
+@app.get('/', response_model=HomeResponse)
 def home():
     return {"hello": "ok"}
 
